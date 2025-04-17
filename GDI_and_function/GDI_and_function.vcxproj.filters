@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="WinCreate_loop">
+      <UniqueIdentifier>{349b2c9f-8f11-43a3-8aca-3eaf74603954}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -21,8 +24,8 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="WinCreate_loop.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="WinCreateLoop.h">
+      <Filter>WinCreate_loop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +35,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="WinCreate_loop.cpp">
+    <ClCompile Include="WinCreateLoop.cpp">
+      <Filter>WinCreate_loop</Filter>
+    </ClCompile>
+    <ClCompile Include="Drow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
