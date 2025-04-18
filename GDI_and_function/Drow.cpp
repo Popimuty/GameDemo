@@ -1,5 +1,6 @@
 ﻿#include "pch.h"                  // 가장 먼저! (PCH 사용 시)
-//#include "Renderer.h"
+#include "Drow.h"
+#include "WinCreateLoop.h"
 
 
 
@@ -7,54 +8,50 @@
 //- GDI : 화면 처리와 그래픽을 담당 
 //- User : User Interface와 Window를 관리
 
-Gdiplus::Graphics* graphics;
-HDC g_FrontBufferDC;
-HDC g_BackBufferDC;
-HBITMAP g_BackBufferBitmap;
-ULONG_PTR g_GdiPlusToken;
-void DrawImage(int, int, Gdiplus::Bitmap*, int, int, int, int);
-void Drow_Initalize(HWND g_hWnd, int g_width, int g_height)
+
+void Drow::Drow_Initalize(HWND hWnd, int width, int height)
 {
-	if (g_hWnd == nullptr) {
+	win_hWnd = hWnd;
+	win_width = width;
+	win_height = height;
+
+	if (win_hWnd == nullptr) {
 		MessageBox(NULL, L"g_hWnd가 nullptr입니다.", L"오류", MB_OK);
 	}
 
-	g_FrontBufferDC = GetDC(g_hWnd); //윈도우 클라이언트 영역의 DeviceContext얻기,지정 창의 클라이언트 영역을 업데이트함
-	g_BackBufferDC = CreateCompatibleDC(g_FrontBufferDC); // 호환되는 DeviceContext 생성
-	g_BackBufferBitmap = CreateCompatibleBitmap(g_FrontBufferDC, g_width, g_height); // 메모리 영역생성
-	SelectObject(g_BackBufferDC, g_BackBufferBitmap); // MemDC의 메모리영역 지정
+	m_FrontBufferDC = GetDC(win_hWnd); //윈도우 클라이언트 영역의 DeviceContext얻기,지정 창의 클라이언트 영역을 업데이트함
+	m_BackBufferDC = CreateCompatibleDC(m_FrontBufferDC); // 호환되는 DeviceContext 생성
+	m_BackBufferBitmap = CreateCompatibleBitmap(m_FrontBufferDC, win_width, win_height); // 메모리 영역생성
+	SelectObject(m_BackBufferDC, m_BackBufferBitmap); // MemDC의 메모리영역 지정
 	// GDI+ 초기화
-	g_GdiPlusToken;
+	m_GdiPlusToken;
 	Gdiplus::GdiplusStartupInput gsi;
-	Gdiplus::GdiplusStartup(&g_GdiPlusToken, &gsi, nullptr);
-	graphics = Gdiplus::Graphics::FromHDC(g_BackBufferDC);
+	Gdiplus::GdiplusStartup(&m_GdiPlusToken, &gsi, nullptr);
+	graphics = Gdiplus::Graphics::FromHDC(m_BackBufferDC);
 }
 
+//x, y	화면에 그릴 위치(좌측 상단 좌표)
+//bitmap	그릴 이미지의 포인터(Gdiplus::Bitmap*)
+//srcX, srcY	비트맵 내부에서 시작할 위치(자르기 시작 좌표)
+//srcWidth, srcHeight	비트맵에서 잘라낼 너비와 높이
 
-// TODO: 라이브러리 함수의 예제입니다.
-void Drow(Gdiplus::Bitmap* bitmap, int width, int height, int g_width, int g_height)
+
+void Drow::Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height , int locate_x, int locate_y, int srcX, int srcY)
 {
-
-	PatBlt(g_BackBufferDC, 0, 0, g_width, g_height, WHITENESS);
+	PatBlt(m_BackBufferDC, 0, 0, win_width, win_height, WHITENESS);
 	//Renderer_Initalize();if (bitmap != nullptr)
-	DrawImage(0, 0, bitmap, 0, 0, width, height);
-	// Renderer::EndDraw()
-	BitBlt(g_FrontBufferDC, 0, 0, g_width, g_height, g_BackBufferDC, 0, 0, SRCCOPY);
-}
-
-
-
-
-void DrawImage(int x, int y, Gdiplus::Bitmap* bitmap, int srcX, int srcY, int srcWitdh, int srcHeight)
-{
-	Gdiplus::Rect srcRect(srcX, srcY, srcWitdh, srcHeight); // 소스의 영역
-	Gdiplus::Rect destRect(x, y, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
+	//int x, int y, Gdiplus::Bitmap* bitmap, int srcX, int srcY, int srcWitdh, int srcHeight
+	Gdiplus::Rect srcRect(srcX, srcY, win_width, win_height); // 소스의 영역
+	Gdiplus::Rect destRect(locate_x,locate_y, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
 	graphics->DrawImage(bitmap, destRect, srcRect.X, srcRect.Y,  // 소스의 일부분만을 그린다. 
 		srcRect.Width, srcRect.Height, Gdiplus::UnitPixel);
+	// Renderer::EndDraw()
+	BitBlt(m_FrontBufferDC, 0, 0, win_width, win_height, m_BackBufferDC, 0, 0, SRCCOPY);
 }
-//graphics->DrawImage(character, x, y, character->GetWidth(), character->GetHeight());
-void EndDrow(HWND g_hWnd) {
-	DeleteObject(g_BackBufferBitmap);
-	DeleteDC(g_BackBufferDC);
-	ReleaseDC(g_hWnd, g_FrontBufferDC);
+
+
+void Drow::Drow_End() {
+	DeleteObject(m_BackBufferBitmap);
+	DeleteDC(m_BackBufferDC);
+	ReleaseDC(win_hWnd, m_FrontBufferDC);
 }

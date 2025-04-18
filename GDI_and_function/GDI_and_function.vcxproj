@@ -139,11 +139,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Drow.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneMove.h" />
+    <ClInclude Include="SingleTone.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="WinCreateLoop.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneMove.cpp" />
+    <ClCompile Include="SingleTone.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WinCreateLoop.cpp" />
     <ClCompile Include="GDI_and_function.cpp" />
     <ClCompile Include="pch.cpp">

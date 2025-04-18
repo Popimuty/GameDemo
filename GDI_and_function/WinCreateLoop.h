@@ -1,11 +1,15 @@
 #pragma once
+#include "Singletone.h"
 
-class WinCreateLoop
+class WinCreateLoop //:public SingleTon<WinCreateLoop>
 {
 public:
 	WinCreateLoop();
 	virtual ~WinCreateLoop();
 	static WinCreateLoop* m_pInstance;
+	HWND GetHandle();
+	int GetWidth();
+	int GetHeight();
 private:
 	HINSTANCE		m_hInstance;
 	int				m_Width = 1024;
@@ -15,6 +19,7 @@ private:
 	std::string		m_ModulePath;
 	std::string		m_WorkingPath;
 	HWND			m_hWnd;
+	
 public:
 	virtual void Initialize();
 	virtual void Shutdown();

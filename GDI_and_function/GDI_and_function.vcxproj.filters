@@ -16,6 +16,12 @@
     <Filter Include="WinCreate_loop">
       <UniqueIdentifier>{349b2c9f-8f11-43a3-8aca-3eaf74603954}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SingleTone">
+      <UniqueIdentifier>{fb7f70d2-bc24-4b8c-bf56-1ec12bd487bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{b8c9f75d-afd1-494c-b935-8b9122ebe0e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -26,6 +32,27 @@
     </ClInclude>
     <ClInclude Include="WinCreateLoop.h">
       <Filter>WinCreate_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTone.h">
+      <Filter>SingleTone</Filter>
+    </ClInclude>
+    <ClInclude Include="Drow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMove.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +66,24 @@
       <Filter>WinCreate_loop</Filter>
     </ClCompile>
     <ClCompile Include="Drow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTone.cpp">
+      <Filter>SingleTone</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMove.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

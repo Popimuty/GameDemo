@@ -94,8 +94,8 @@ void WinCreateLoop::Initialize()
 		m_szWinName.c_str(),
 		m_TitleName.c_str(),
 		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT,//위치좌표 xy
-		rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
+		CW_USEDEFAULT, CW_USEDEFAULT,									//위치좌표 xy
+		rcClient.right - rcClient.left, rcClient.bottom - rcClient.top, // 윈도우 크기
 		NULL, NULL, m_hInstance, this);
 
 	ShowWindow(m_hWnd, SW_SHOW);
@@ -130,4 +130,16 @@ void WinCreateLoop::Update() {
 
 void WinCreateLoop::Render() {
 
+}
+
+HWND WinCreateLoop::GetHandle() { // 다른 class에 윈도우 헨들을 리턴
+	return m_hWnd;
+}
+
+int WinCreateLoop::GetWidth() {  // 윈도우 창의 폭 리턴
+	return m_Width;
+}
+
+int WinCreateLoop::GetHeight() {  // 윈도우 창의 높이 리턴
+	return m_Height;
 }
