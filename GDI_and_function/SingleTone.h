@@ -1,36 +1,44 @@
-#pragma once
+ï»¿#pragma once
 
 template <typename T> 
 class SingleTon
 {
-
-private:
-	static T* m_Instance;
-
 public:
-	//assert(ÂüÁ¶°Ç) : ±×³É Áö³ª°¨         assert(°ÅÁşÁ¶°Ç) : 
-	// ÇÁ·Î±×·¥ ÅÍÁü , ÁÖ·Î ÇÁ·Î±×·¥ÀÌ ¿øÄ¡¾Ê´Â ¹æÇâÀ¸·Î Èê·¯°¡Áö ¾Ê°Ô Áß°£¿¡ ¸ØÃß´Â ±â´É
-	SingleTon() {
-		assert(m_Instance == nullptr && "½Ì±ÛÅæ ÀÎ½ºÅÏ½º°¡ ÀÌ¹Ì »ı¼ºµÊ!");
-		m_Instance = static_cast<T*>(this);
+	// ëª…ì‹œì  ì´ˆê¸°í™”
+	static void Create() {
+		assert(s_instance == nullptr && "Singleton already created!");
+		if (!s_instance)
+			s_instance = new T();
 	}
 
+	// ëª…ì‹œì  í•´ì œ
+	static void Destroy() {
+		assert(s_instance != nullptr && "Singleton not created or already destroyed!");
+		delete s_instance;
+		s_instance = nullptr;
+	}
+
+	// ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì°¸ì¡° ë°˜í™˜ (ê°„ì ‘ í˜¸ì¶œ ì—†ì´ .ìœ¼ë¡œ ì ‘ê·¼)
+	static T& Get() {
+		if (s_instance == nullptr) {
+			Create();
+		}
+		return *s_instance; // ìƒì„± í•´ì œ
+	}
+
+protected:
+	SingleTon() = default;
 	virtual ~SingleTon() = default;
 
-	//ÇÔ¼öÀÌ¸§() = delete;  => ÇØ´ç ÇÔ¼ö´Â Àı´ë È£ÃâµÉ ¼ö ¾ø°Ô ¸¸µë
-	SingleTon(const SingleTon&) = delete;					// º¹»ç »ı¼ºÀÚ ±İÁö
-	SingleTon& operator=(const SingleTon&) = delete;        // º¹»ç ´ëÀÔ ±İÁö
-	SingleTon(SingleTon&&) = delete;						// ÀÌµ¿ »ı¼ºÀÚ ±İÁö
-	SingleTon& operator=(SingleTon&&) = delete;				// ÀÌµ¿ ´ëÀÔ ±İÁö
+	// ë³µì‚¬ ë° ì´ë™ ê¸ˆì§€
+	SingleTon(const SingleTon&) = delete;
+	SingleTon& operator=(const SingleTon&) = delete;
+	SingleTon(SingleTon&&) = delete;
+	SingleTon& operator=(SingleTon&&) = delete;
 
-	static T& Get()
-	{
-		assert(m_Instance != nullptr && "½Ì±ÛÅæ ÀÎ½ºÅÏ½º°¡ »ı¼º ¾ÈµÊ!");
-		return *m_Instance;
-	}
+private:
+	static T* s_instance;
 };
 
-// ÃÊ±âÈ­
 template <typename T>
-T* SingleTon<T>::m_Instance = nullptr;
-
+T* SingleTon<T>::s_instance = nullptr;

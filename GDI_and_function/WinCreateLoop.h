@@ -1,15 +1,15 @@
 #pragma once
 #include "Singletone.h"
 
-class WinCreateLoop //:public SingleTon<WinCreateLoop>
+class WinCreateLoop :public SingleTon<WinCreateLoop>
 {
 public:
 	WinCreateLoop();
 	virtual ~WinCreateLoop();
 	static WinCreateLoop* m_pInstance;
-	HWND GetHandle();
+	/*HWND GetHandle();
 	int GetWidth();
-	int GetHeight();
+	int GetHeight();*/
 private:
 	HINSTANCE		m_hInstance;
 	int				m_Width = 1024;

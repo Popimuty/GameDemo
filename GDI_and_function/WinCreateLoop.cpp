@@ -1,7 +1,11 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "WinCreateLoop.h"
-
-
+#include "SceneMove.h"
+#include "Input.h"
+#include "Drow.h"
+#include "Scene.h"
+#include "Object.h"
+#include "Timer.h"
 WinCreateLoop::WinCreateLoop()
 	: m_hInstance(nullptr)
 		, m_hWnd(nullptr)
@@ -16,34 +20,34 @@ WinCreateLoop::~WinCreateLoop()
 
 WinCreateLoop* WinCreateLoop::m_pInstance = nullptr;
 
-// wparam : Æ¯Á¤ Å°º¸µå³ª ¸¶¿ì½ºÀÇ ¾î´À Å°°¡ ´­¸®¾úÀ»¶§ ÁÖ·Î »ç¿ë
-// iparam : x,y ÁÂÇ¥°ªÀ» »ç¿ëÇÒ¶§ ÁÖ¼Ò »ç¿ë
+// wparam : íŠ¹ì • í‚¤ë³´ë“œë‚˜ ë§ˆìš°ìŠ¤ì˜ ì–´ëŠ í‚¤ê°€ ëˆŒë¦¬ì—ˆì„ë•Œ ì£¼ë¡œ ì‚¬ìš©
+// iparam : x,y ì¢Œí‘œê°’ì„ ì‚¬ìš©í• ë•Œ ì£¼ì†Œ ì‚¬ìš©
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	WinCreateLoop* wThis = nullptr;
-	// WM_NCCREATE: À©µµ¿ì »ı¼º ¾ÆÁÖ ÃÊ±â¿¡, ÇÁ·¹ÀÓ »ı¼º Àü¿¡. WM_CREATEº¸´Ù ÀÌÀü¿¡¹ß»ı
+	// WM_NCCREATE: ìœˆë„ìš° ìƒì„± ì•„ì£¼ ì´ˆê¸°ì—, í”„ë ˆì„ ìƒì„± ì „ì—. WM_CREATEë³´ë‹¤ ì´ì „ì—ë°œìƒ
 	if (uMsg == WM_NCCREATE)
 	{
 
-		//reinterpret_cast<¹Ù²Ü Å¸ÀÔ>(´ë»ó) : Æ÷ÀÎÅÍ ³¢¸®ÀÇ Å¸ÀÔ º¯È¯ ÇÔ¼ö
+		//reinterpret_cast<ë°”ê¿€ íƒ€ì…>(ëŒ€ìƒ) : í¬ì¸í„° ë¼ë¦¬ì˜ íƒ€ì… ë³€í™˜ í•¨ìˆ˜
 		CREATESTRUCT* tmp_s = reinterpret_cast<CREATESTRUCT*>(lParam);
 		wThis = reinterpret_cast<WinCreateLoop*>(tmp_s->lpCreateParams);
 
-		// HWND¿¡ this Æ÷ÀÎÅÍ ÀúÀå
+		// HWNDì— this í¬ì¸í„° ì €ì¥
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(wThis));
 	}
 	else {
-		// WM_NCCREATE°¡ ¾Æ´Ò ¶§´Â HWND¿¡¼­ this Æ÷ÀÎÅÍ¸¦ °¡Á®¿Â´Ù
+		// WM_NCCREATEê°€ ì•„ë‹ ë•ŒëŠ” HWNDì—ì„œ this í¬ì¸í„°ë¥¼ ê°€ì ¸ì˜¨ë‹¤
 		wThis = reinterpret_cast<WinCreateLoop*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
 	}
 
 
-	// ¸â¹ö ÇÔ¼ö È£Ãâ, ÇÔ¼öÀÇ ¸Ş¼¼Áö Ã³¸®ÇÏ´Â °¡»óÇÔ¼ö¸¦ È£ÃâÀ» ÇØÁà¾ßÇÔ
+	// ë©¤ë²„ í•¨ìˆ˜ í˜¸ì¶œ, í•¨ìˆ˜ì˜ ë©”ì„¸ì§€ ì²˜ë¦¬í•˜ëŠ” ê°€ìƒí•¨ìˆ˜ë¥¼ í˜¸ì¶œì„ í•´ì¤˜ì•¼í•¨
 	if (wThis)
 		wThis->WndProc(hwnd, uMsg, wParam, lParam);
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
-	//WndProcÀÌ Å¬·¡½ºÀÇ ¸É¹ö º¯¼ö·Î µé¾î°¡¸é¼­, ¸®ÅÏ°ªÀÌ ¸ÂÁö ¾ÊÀ½!!
+	//WndProcì´ í´ë˜ìŠ¤ì˜ ë§´ë²„ ë³€ìˆ˜ë¡œ ë“¤ì–´ê°€ë©´ì„œ, ë¦¬í„´ê°’ì´ ë§ì§€ ì•ŠìŒ!!
 }
 void WinCreateLoop::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -55,20 +59,20 @@ void WinCreateLoop::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-// hInstance : ÇÁ·Î±×·¥ÀÇ ÁÖ¼Ò°ª
-// lpCmdLine : À©µµ¿ì ¸í·É¿¡ »ç¿ëµÇ´Â ¸í·É¾î¸¦ ³Ö´Â°÷, ÀÌ°ÍÀ» ºĞ±â·Î ÇÏ¿© ÄÚµå¸¦ Â© ¼ö ÀÖÀ½
-// GetModuleFileNameA(NULL, szPath, MAX_PATH) : ÇöÀç ½ÇÇà ÁßÀÎ ¸ğµâ(= EXE³ª DLL)ÀÇ ÀüÃ¼ °æ·Î¸¦ ¹İÈ¯
-//												NULLÀ» ÁÖ¸é ÇöÀç ½ÇÇà ÁßÀÎ EXEÀÇ °æ·Î¸¦ ¹İÈ¯.
-//GetCurrentDirectoryA(MAX_PATH, szPath) : ÇöÀç ÇÁ·Î¼¼½ºÀÇ ÀÛ¾÷ µğ·ºÅä¸® (working directory) ¸¦ ¹İÈ¯
-//OutputDebugStringA(...) :µğ¹ö±× ÄÜ¼Ö¿¡ ¹®ÀÚ¿­À» Ãâ·Â
-//c_str() : stringÀ» char* ÇüÅÂ·Î ¹Ù²ãÁÖ´Â ¸Ş¼­µå
+// hInstance : í”„ë¡œê·¸ë¨ì˜ ì£¼ì†Œê°’
+// lpCmdLine : ìœˆë„ìš° ëª…ë ¹ì— ì‚¬ìš©ë˜ëŠ” ëª…ë ¹ì–´ë¥¼ ë„£ëŠ”ê³³, ì´ê²ƒì„ ë¶„ê¸°ë¡œ í•˜ì—¬ ì½”ë“œë¥¼ ì§¤ ìˆ˜ ìˆìŒ
+// GetModuleFileNameA(NULL, szPath, MAX_PATH) : í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ ëª¨ë“ˆ(= EXEë‚˜ DLL)ì˜ ì „ì²´ ê²½ë¡œë¥¼ ë°˜í™˜
+//												NULLì„ ì£¼ë©´ í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ EXEì˜ ê²½ë¡œë¥¼ ë°˜í™˜.
+//GetCurrentDirectoryA(MAX_PATH, szPath) : í˜„ì¬ í”„ë¡œì„¸ìŠ¤ì˜ ì‘ì—… ë””ë ‰í† ë¦¬ (working directory) ë¥¼ ë°˜í™˜
+//OutputDebugStringA(...) :ë””ë²„ê·¸ ì½˜ì†”ì— ë¬¸ìì—´ì„ ì¶œë ¥
+//c_str() : stringì„ char* í˜•íƒœë¡œ ë°”ê¿”ì£¼ëŠ” ë©”ì„œë“œ
 void WinCreateLoop::Initialize()
 {
 	char szPath[MAX_PATH] = { 0, };
-	GetModuleFileNameA(NULL, szPath, MAX_PATH); // ÇöÀç ¸ğµâÀÇ °æ·Î
-	m_ModulePath = szPath; // ¸ğµâ °æ·Î
-	GetCurrentDirectoryA(MAX_PATH, szPath); //ÀÛ¾÷ µğ·ºÅä¸®
-	m_WorkingPath = szPath; // ÀÛ¾÷ µğ·ºÅä¸®
+	GetModuleFileNameA(NULL, szPath, MAX_PATH); // í˜„ì¬ ëª¨ë“ˆì˜ ê²½ë¡œ
+	m_ModulePath = szPath; // ëª¨ë“ˆ ê²½ë¡œ
+	GetCurrentDirectoryA(MAX_PATH, szPath); //ì‘ì—… ë””ë ‰í† ë¦¬
+	m_WorkingPath = szPath; // ì‘ì—… ë””ë ‰í† ë¦¬
 	OutputDebugStringA(std::string(std::string(m_ModulePath) + std::string("\n")).c_str());
 	OutputDebugStringA(std::string(std::string(m_WorkingPath) + std::string("\n")).c_str());
 	//printf("Current Directory: %s\n", szPath);
@@ -78,29 +82,33 @@ void WinCreateLoop::Initialize()
 	wc.hInstance = m_hInstance;
 	wc.lpszClassName = m_szWinName.c_str();
 	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);	// ±âº» Ä¿¼­ ¸ğ¾ç
-	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);	// ±âº» ¾ÆÀÌÄÜ ¸ğ¾ç
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);	// ê¸°ë³¸ ì»¤ì„œ ëª¨ì–‘
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);	// ê¸°ë³¸ ì•„ì´ì½˜ ëª¨ì–‘
 	RegisterClass(&wc);
-	// rect(¿Ş,À§,¿À,¹Ù´Ú)
-	// °¢°¢ È­¸é¿¡¼­ÀÇ ÁÂÇ¥¸¦ ÀÇ¹ÌÇÔ
-	// ¿øÇÏ´Â Å©±â°¡ Á¶Á¤µÇ¾î ¸®ÅÏ
+	// rect(ì™¼,ìœ„,ì˜¤,ë°”ë‹¥)
+	// ê°ê° í™”ë©´ì—ì„œì˜ ì¢Œí‘œë¥¼ ì˜ë¯¸í•¨
+	// ì›í•˜ëŠ” í¬ê¸°ê°€ ì¡°ì •ë˜ì–´ ë¦¬í„´
 	RECT rcClient = { 0, 0, (LONG)m_Width, (LONG)m_Height };
 	AdjustWindowRect(&rcClient, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// https://learn.microsoft.com/ko-kr/windows/win32/api/winuser/nf-winuser-createwindowexw
-	// ¸Å°³º¯¼ö4. https://kaspyx.tistory.com/32
+	// ë§¤ê°œë³€ìˆ˜4. https://kaspyx.tistory.com/32
 	m_hWnd = CreateWindowExW(
 		0,
 		m_szWinName.c_str(),
 		m_TitleName.c_str(),
 		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT,									//À§Ä¡ÁÂÇ¥ xy
-		rcClient.right - rcClient.left, rcClient.bottom - rcClient.top, // À©µµ¿ì Å©±â
+		CW_USEDEFAULT, CW_USEDEFAULT,									//ìœ„ì¹˜ì¢Œí‘œ xy
+		rcClient.right - rcClient.left, rcClient.bottom - rcClient.top, // ìœˆë„ìš° í¬ê¸°
 		NULL, NULL, m_hInstance, this);
 
 	ShowWindow(m_hWnd, SW_SHOW);
 	UpdateWindow(m_hWnd);
-	//°¢Á¾ Initalize ³Ö±â!!
+	
+
+	//ê°ì¢… Initalize ë„£ê¸°!!
+	Timer::Get().Initalize();
+	Drow::Get().Drow_Init(m_hWnd, m_Width ,m_Height);
 }
 
 	
@@ -114,32 +122,41 @@ void WinCreateLoop::Loop() {
 			if (msg.message == WM_QUIT)
 				break;
 
-			TranslateMessage(&msg);// ¸Ş¼¼Áö Àü´Ş
-			DispatchMessage(&msg);// ¸Ş¼¼Áö Ã³¸® -> ¿©±â ¾ø´Â°ª -> DefWindowProc : À©µµ¿ì¿¡¼­ Ã³¸®
+			TranslateMessage(&msg);// ë©”ì„¸ì§€ ì „ë‹¬
+			DispatchMessage(&msg);// ë©”ì„¸ì§€ ì²˜ë¦¬ -> ì—¬ê¸° ì—†ëŠ”ê°’ -> DefWindowProc : ìœˆë„ìš°ì—ì„œ ì²˜ë¦¬
 		}
 
 	}
-	//up
-	//ren
+	Update();
+	Render();
 }
 
 
 void WinCreateLoop::Update() {
-
+	Input::Get().Update();
+	SceneMove::Get().Update();
+	Timer::Get().Update();
 }
 
 void WinCreateLoop::Render() {
 
 }
 
-HWND WinCreateLoop::GetHandle() { // ´Ù¸¥ class¿¡ À©µµ¿ì ÇîµéÀ» ¸®ÅÏ
-	return m_hWnd;
+void WinCreateLoop::Shutdown() {
+
 }
 
-int WinCreateLoop::GetWidth() {  // À©µµ¿ì Ã¢ÀÇ Æø ¸®ÅÏ
-	return m_Width;
-}
 
-int WinCreateLoop::GetHeight() {  // À©µµ¿ì Ã¢ÀÇ ³ôÀÌ ¸®ÅÏ
-	return m_Height;
-}
+// ì•„ë§ˆ í•„ìš” ì—†ìŒ, ë‚˜ì¤‘ì— ì™„ì „íˆ í•„ìš”ì—†ìŒ ì§€ìš°ê¸°!!!!!!
+
+//HWND WinCreateLoop::GetHandle() { // ë‹¤ë¥¸ classì— ìœˆë„ìš° í—¨ë“¤ì„ ë¦¬í„´
+//	return m_hWnd;
+//}
+//
+//int WinCreateLoop::GetWidth() {  // ìœˆë„ìš° ì°½ì˜ í­ ë¦¬í„´
+//	return m_Width;
+//}
+//
+//int WinCreateLoop::GetHeight() {  // ìœˆë„ìš° ì°½ì˜ ë†’ì´ ë¦¬í„´
+//	return m_Height;
+//}

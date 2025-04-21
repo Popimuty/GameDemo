@@ -23,7 +23,7 @@ public:
 	void Clear();
 	virtual void Update();
 	virtual void Render();
-	virtual void Enter() = 0;
+	virtual void Scene_init();
 	virtual void Exit() { Clear(); } // √ ±‚»≠??
 
 };

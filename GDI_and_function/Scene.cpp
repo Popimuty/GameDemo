@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
-
+#include "Drow.h"
+#include "WinCreateLoop.h"
 void Scene::Clear(){
 	//auto -> 타입을 컴파일러가 자동으로 추론
 	for (auto& object : m_Objects)
@@ -12,11 +13,15 @@ void Scene::Clear(){
 	{
 		delete object;
 	}
-	m_DeletePendingObjects.clear(); // 루프가 끝난 다음에 m_object컨테이너에 있는 물체들을 나중에 삭제
+	m_DeletePendingObjects.clear(); // 루프가 끝난 다음에 m_컨테이너에 있는 물체들을 나중에 삭제
 }
 void Scene::Update() {
 
 }
 void Scene::Render() {
 
+}
+
+void Scene::Scene_init() {
+	
 }

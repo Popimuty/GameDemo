@@ -9,7 +9,7 @@
 //- User : User Interface와 Window를 관리
 
 
-void Drow::Drow_Initalize(HWND hWnd, int width, int height)
+void Drow::Drow_Init(HWND hWnd, int width, int height)
 {
 	win_hWnd = hWnd;
 	win_width = width;
@@ -38,7 +38,7 @@ void Drow::Drow_Initalize(HWND hWnd, int width, int height)
 
 void Drow::Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height , int locate_x, int locate_y, int srcX, int srcY)
 {
-	PatBlt(m_BackBufferDC, 0, 0, win_width, win_height, WHITENESS);
+	PatBlt(m_BackBufferDC, 0, 0, win_width, win_height, BLACKNESS);
 	//Renderer_Initalize();if (bitmap != nullptr)
 	//int x, int y, Gdiplus::Bitmap* bitmap, int srcX, int srcY, int srcWitdh, int srcHeight
 	Gdiplus::Rect srcRect(srcX, srcY, win_width, win_height); // 소스의 영역

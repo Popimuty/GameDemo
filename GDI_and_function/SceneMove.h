@@ -5,22 +5,23 @@
 class Scene;
 class SceneMove : public SingleTon<SceneMove>
 {
+	friend class SingleTon<SceneMove>;
 	//friend class Singleton<SceneManager>; // 이 클래스만 생성자 접근 허용
 private:
 	SceneMove() = default;			// 다른 생성을 통한 생성자 호출은 금지
 	~SceneMove() = default;
 
 	//std::vector : C++ 표준 템플릿 라이브러리(STL)의 동적 배열(가변 크기 배열)
-	std::vector<Scene*> m_vScenes; // 씬 리스트
+	std::vector<Scene*> m_Scenes_list; // 씬 리스트
 
-	Scene* m_pCurrentScene = nullptr; // 현재 씬
-	Scene* m_pNextScene = nullptr; // 다음 씬
+	Scene* m_p_NowScene = nullptr; // 현재 씬
+	Scene* m_p_NextScene = nullptr; // 다음 씬
 public:
 	void Init();
 	void Update();
 	void Render();
 	void ChangeScene(size_t index);
-	Scene* GetCurrentScene() { return m_pCurrentScene; }
+	Scene* GetCurrentScene() { return m_p_NowScene; }
 
 	//push_back  : push_back의 경우 Vector의 마지막에 새로운 원소를 추가하기 위해 
 	//			   임시 객체를 하나 만들어서 거기에 값을 복사 후, Vector에 삽입하는 과정을 거친다. 
@@ -32,7 +33,7 @@ public:
 	void CreateScene()
 	{
 		Scene* pScene = new T();
-		m_vScenes.push_back(pScene);
+		m_Scenes_list.push_back(pScene);
 	}
 };
 
