@@ -1,4 +1,5 @@
-﻿#include "pch.h"
+﻿
+#include "pch.h"
 #include "WinCreateLoop.h"
 #include "SceneMove.h"
 #include "Input.h"
@@ -8,14 +9,29 @@
 #include "Timer.h"
 WinCreateLoop::WinCreateLoop()
 	: m_hInstance(nullptr)
-		, m_hWnd(nullptr)
-	{
-		m_pInstance = this;
+	, m_hWnd(nullptr)
+{
+	m_pInstance = this;
 }
 
 WinCreateLoop::~WinCreateLoop()
 {
 
+}
+
+
+
+
+
+
+
+void WinCreateLoop::InitConsole() //나중에 빼기!!
+{
+	AllocConsole();
+	FILE* fp;
+	freopen_s(&fp, "CONOUT$", "w", stdout);
+	SetConsoleTitle(L"윈도우 메시지 콘솔 로그");
+	printf("콘솔 로그 시작...\n\n");
 }
 
 WinCreateLoop* WinCreateLoop::m_pInstance = nullptr;
@@ -68,6 +84,7 @@ void WinCreateLoop::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //c_str() : string을 char* 형태로 바꿔주는 메서드
 void WinCreateLoop::Initialize()
 {
+	InitConsole();  // 콘솔 출력 초기화
 	char szPath[MAX_PATH] = { 0, };
 	GetModuleFileNameA(NULL, szPath, MAX_PATH); // 현재 모듈의 경로
 	m_ModulePath = szPath; // 모듈 경로
@@ -104,14 +121,14 @@ void WinCreateLoop::Initialize()
 
 	ShowWindow(m_hWnd, SW_SHOW);
 	UpdateWindow(m_hWnd);
-	
+
 
 	//각종 Initalize 넣기!!
 	Timer::Get().Initalize();
-	Drow::Get().Drow_Init(m_hWnd, m_Width ,m_Height);
+	Drow::Get().Drow_Init(m_hWnd, m_Width, m_Height);
 }
 
-	
+
 
 void WinCreateLoop::Loop() {
 	MSG msg;
@@ -139,7 +156,7 @@ void WinCreateLoop::Update() {
 }
 
 void WinCreateLoop::Render() {
-
+	SceneMove::Get().Render();
 }
 
 void WinCreateLoop::Shutdown() {

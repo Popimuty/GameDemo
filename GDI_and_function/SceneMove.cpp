@@ -6,7 +6,8 @@
 void SceneMove::Init() {
 }
 void SceneMove::Render() {
-
+	if (m_p_NowScene)
+		m_p_NowScene->Render();
 }
 
 //포인터 상태표  upate 중           update 끝
@@ -19,13 +20,13 @@ void SceneMove::Update() {
 			m_p_NowScene->Exit();
 
 		m_p_NowScene = m_p_NextScene;
-		m_p_NowScene = nullptr;
-
+		m_p_NextScene = nullptr;
 		m_p_NowScene->Scene_init();
 	}
 
 	if (m_p_NowScene)
 		m_p_NowScene->Update();
+	
 }
 
 

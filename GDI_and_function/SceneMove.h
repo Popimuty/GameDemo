@@ -30,10 +30,13 @@ public:
 	//				  함수 내에서 삽입을 위한 객체를 자체적으로 생성할 수 있다. 
 	//                즉, 불필요한 임시 객체를 만들 필요가 없다.
 	template<typename T>
-	void CreateScene()
+	 void CreateScene()
 	{
 		Scene* pScene = new T();
 		m_Scenes_list.push_back(pScene);
+		pScene->index = m_Scenes_list.size() - 1;
+		if (m_p_NextScene == nullptr)
+			m_p_NextScene = pScene;
 	}
 };
 

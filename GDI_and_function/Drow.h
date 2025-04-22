@@ -7,11 +7,11 @@ public:
 	Drow() = default;
 	~Drow() = default;
 private:
-	HWND win_hWnd;
-	int win_width;
-	int win_height;
-	int im_width;
-	int im_height;
+	HWND win_hWnd =NULL;
+	int win_width  = 0;
+	int win_height  = 0;
+	int im_width = 0;
+	int im_height = 0;
 	Gdiplus::Graphics* graphics;
 	HDC m_FrontBufferDC;
 	HDC m_BackBufferDC;

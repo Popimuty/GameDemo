@@ -7,15 +7,13 @@ public:
 	WinCreateLoop();
 	virtual ~WinCreateLoop();
 	static WinCreateLoop* m_pInstance;
-	/*HWND GetHandle();
-	int GetWidth();
-	int GetHeight();*/
+	void InitConsole();
 private:
 	HINSTANCE		m_hInstance;
 	int				m_Width = 1024;
 	int				m_Height = 768;
 	std::wstring	m_szWinName = L"GDIEngineWindowClass";
-	std::wstring	m_TitleName = L"Default Title Name";
+	std::wstring	m_TitleName = L"GameTitle";
 	std::string		m_ModulePath;
 	std::string		m_WorkingPath;
 	HWND			m_hWnd;

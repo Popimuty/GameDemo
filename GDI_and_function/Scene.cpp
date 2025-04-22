@@ -16,10 +16,16 @@ void Scene::Clear(){
 	m_DeletePendingObjects.clear(); // 루프가 끝난 다음에 m_컨테이너에 있는 물체들을 나중에 삭제
 }
 void Scene::Update() {
-
+	for (auto& object : m_Objects)
+	{
+		//object->Update();
+	}
 }
 void Scene::Render() {
-
+	for (auto& object : m_Objects)
+	{
+		//object->Render();
+	}
 }
 
 void Scene::Scene_init() {

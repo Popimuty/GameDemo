@@ -11,10 +11,10 @@
 
 void Drow::Drow_Init(HWND hWnd, int width, int height)
 {
+	
 	win_hWnd = hWnd;
 	win_width = width;
 	win_height = height;
-
 	if (win_hWnd == nullptr) {
 		MessageBox(NULL, L"g_hWnd가 nullptr입니다.", L"오류", MB_OK);
 	}
@@ -25,9 +25,11 @@ void Drow::Drow_Init(HWND hWnd, int width, int height)
 	SelectObject(m_BackBufferDC, m_BackBufferBitmap); // MemDC의 메모리영역 지정
 	// GDI+ 초기화
 	m_GdiPlusToken;
+	
 	Gdiplus::GdiplusStartupInput gsi;
 	Gdiplus::GdiplusStartup(&m_GdiPlusToken, &gsi, nullptr);
 	graphics = Gdiplus::Graphics::FromHDC(m_BackBufferDC);
+
 }
 
 //x, y	화면에 그릴 위치(좌측 상단 좌표)
@@ -36,19 +38,22 @@ void Drow::Drow_Init(HWND hWnd, int width, int height)
 //srcWidth, srcHeight	비트맵에서 잘라낼 너비와 높이
 
 
-void Drow::Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height , int locate_x, int locate_y, int srcX, int srcY)
+void Drow::Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int locate_x, int locate_y, int srcX, int srcY)
 {
+	if (bitmap == nullptr) {
+		MessageBox(NULL, L"Bitmap이 nullptr입니다.", L"오류", MB_OK);
+		return;
+	}
 	PatBlt(m_BackBufferDC, 0, 0, win_width, win_height, BLACKNESS);
 	//Renderer_Initalize();if (bitmap != nullptr)
 	//int x, int y, Gdiplus::Bitmap* bitmap, int srcX, int srcY, int srcWitdh, int srcHeight
-	Gdiplus::Rect srcRect(srcX, srcY, win_width, win_height); // 소스의 영역
-	Gdiplus::Rect destRect(locate_x,locate_y, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
+	Gdiplus::Rect srcRect(srcX, srcY, im_width, im_height); // 소스의 영역
+	Gdiplus::Rect destRect(locate_x, locate_y, srcRect.Width, srcRect.Height); // 화면에 그릴 영역
 	graphics->DrawImage(bitmap, destRect, srcRect.X, srcRect.Y,  // 소스의 일부분만을 그린다. 
 		srcRect.Width, srcRect.Height, Gdiplus::UnitPixel);
 	// Renderer::EndDraw()
 	BitBlt(m_FrontBufferDC, 0, 0, win_width, win_height, m_BackBufferDC, 0, 0, SRCCOPY);
 }
-
 
 void Drow::Drow_End() {
 	DeleteObject(m_BackBufferBitmap);

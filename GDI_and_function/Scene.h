@@ -1,11 +1,13 @@
 #pragma once
-
 class Object;
 class Scene
 {
+
 	std::vector<Object*> m_Objects;
 	std::vector<Object*> m_DeletePendingObjects;
+
 public:
+	size_t index = 0;
 	Scene() = default;
 	virtual ~Scene()
 	{
