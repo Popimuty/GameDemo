@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Scene.h"
-#include "Drow.h"
+#include "Draw.h"
 #include "WinCreateLoop.h"
 void Scene::Clear(){
 	//auto -> 타입을 컴파일러가 자동으로 추론

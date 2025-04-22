@@ -3,9 +3,8 @@
 #include "WinCreateLoop.h"
 #include "SceneMove.h"
 #include "Input.h"
-#include "Drow.h"
+#include "Draw.h"
 #include "Scene.h"
-#include "Object.h"
 #include "Timer.h"
 WinCreateLoop::WinCreateLoop()
 	: m_hInstance(nullptr)
@@ -17,21 +16,6 @@ WinCreateLoop::WinCreateLoop()
 WinCreateLoop::~WinCreateLoop()
 {
 
-}
-
-
-
-
-
-
-
-void WinCreateLoop::InitConsole() //나중에 빼기!!
-{
-	AllocConsole();
-	FILE* fp;
-	freopen_s(&fp, "CONOUT$", "w", stdout);
-	SetConsoleTitle(L"윈도우 메시지 콘솔 로그");
-	printf("콘솔 로그 시작...\n\n");
 }
 
 WinCreateLoop* WinCreateLoop::m_pInstance = nullptr;
@@ -84,7 +68,6 @@ void WinCreateLoop::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //c_str() : string을 char* 형태로 바꿔주는 메서드
 void WinCreateLoop::Initialize()
 {
-	InitConsole();  // 콘솔 출력 초기화
 	char szPath[MAX_PATH] = { 0, };
 	GetModuleFileNameA(NULL, szPath, MAX_PATH); // 현재 모듈의 경로
 	m_ModulePath = szPath; // 모듈 경로
@@ -125,7 +108,7 @@ void WinCreateLoop::Initialize()
 
 	//각종 Initalize 넣기!!
 	Timer::Get().Initalize();
-	Drow::Get().Drow_Init(m_hWnd, m_Width, m_Height);
+	Draw::Get().Drow_Init(m_hWnd, m_Width, m_Height);
 }
 
 
@@ -142,10 +125,9 @@ void WinCreateLoop::Loop() {
 			TranslateMessage(&msg);// 메세지 전달
 			DispatchMessage(&msg);// 메세지 처리 -> 여기 없는값 -> DefWindowProc : 윈도우에서 처리
 		}
-
+		Update();
+		Render();
 	}
-	Update();
-	Render();
 }
 
 

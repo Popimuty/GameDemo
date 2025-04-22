@@ -2,10 +2,10 @@
 
 #include "SingleTone.h"
 
-class  Drow : public SingleTon<Drow> {
+class  Draw : public SingleTon<Draw> {
 public:
-	Drow() = default;
-	~Drow() = default;
+	Draw() = default;
+	~Draw() = default;
 private:
 	HWND win_hWnd =NULL;
 	int win_width  = 0;
@@ -21,6 +21,7 @@ private:
 public:
 	void Drow_Init(HWND hWnd, int width, int height);
 	// TODO: 라이브러리 함수의 예제입니다.
+	
 	void Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int locate_x, int locate_y, int srcX, int srcY);
 	void Drow_End();
 

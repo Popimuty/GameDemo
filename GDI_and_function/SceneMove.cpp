@@ -5,11 +5,6 @@
 
 void SceneMove::Init() {
 }
-void SceneMove::Render() {
-	if (m_p_NowScene)
-		m_p_NowScene->Render();
-}
-
 //포인터 상태표  upate 중           update 끝
 //m_p_NowScene     있음         끝난 포인터 있음
 //m_p_NextScene    null              있음
@@ -27,6 +22,11 @@ void SceneMove::Update() {
 	if (m_p_NowScene)
 		m_p_NowScene->Update();
 	
+}
+
+void SceneMove::Render() {
+	if (m_p_NowScene)
+		m_p_NowScene->Render();
 }
 
 

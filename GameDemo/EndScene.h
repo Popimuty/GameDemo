@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 
-class EndScene : Scene
+class EndScene : public Scene
 {
 
 	

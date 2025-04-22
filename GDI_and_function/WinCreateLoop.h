@@ -7,7 +7,6 @@ public:
 	WinCreateLoop();
 	virtual ~WinCreateLoop();
 	static WinCreateLoop* m_pInstance;
-	void InitConsole();
 private:
 	HINSTANCE		m_hInstance;
 	int				m_Width = 1024;

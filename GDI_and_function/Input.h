@@ -22,5 +22,6 @@ private:
 public:
     void Update();
     void Start();
+    KeyState check(int);
 };
 

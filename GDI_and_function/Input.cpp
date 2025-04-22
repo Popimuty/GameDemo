@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Input.h"
 
-
-
 void Input::Update() {
     for (int vk = 0; vk < 256; ++vk)
     {
@@ -31,4 +29,8 @@ void Input::Update() {
 void Input::Start() {
     KeyState keyStates[256] = { KeyState::KEY_NONE };  // 현재 키의 상태를 저장하는 배열
     bool prevKeyState[256] = { false };                // 이전상태의 키 상태를 저장하는 배열
+}
+
+KeyState Input::check(int vk) {
+    return keyStates[vk];
 }
