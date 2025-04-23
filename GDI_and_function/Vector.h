@@ -10,21 +10,22 @@ public:
     virtual ~Vector2() {};
     Vector2 get_vect(const float x_tmp, const float y_tmp) {
         Vector2 tmp;
-        tmp.x = x_tmp;
-        tmp.y = y_tmp;
-        return tmp;
+        x = x_tmp;
+        y = y_tmp;
+        return *this;
     }
 
-    Vector2 normalize(const Vector2& p1) {
-        Vector2 tmp;
-        tmp.x = p1.x / sqrt(p1.x * p1.x + p1.y * p1.y);
-        tmp.y = p1.y / sqrt(p1.x * p1.x + p1.y * p1.y);
+    Vector2 normalize() {
+        x = x / sqrt(x * x + y * y);
+        y = y / sqrt(x * x + y * y);
+        return *this;
     }
 
-    Vector2 squr(const Vector2& p1) {
+    Vector2 squr() {
         Vector2 tmp;
-        tmp.x = sqrt(p1.x);
-        tmp.y = sqrt(p1.y);
+        x = sqrt(x);
+        y = sqrt(y);
+        return *this;
     }
 
     float Dot(const Vector2& p1, const Vector2& p2) {
@@ -57,28 +58,25 @@ public:
 
     Vector2 operator+ (const Vector2& p1) {
         Vector2 tmp;
-        tmp.x = x + p1.x;
-        tmp.y = y + p1.y;
-        return tmp;
+        x = x + p1.x;
+        y = y + p1.y;
+        return *this;
     }
     Vector2 operator- (const Vector2& p1) {
-        Vector2 tmp;
-        tmp.x = x - p1.x;
-        tmp.y = y - p1.y;
-        return tmp;
+        x = x - p1.x;
+        y = y - p1.y;
+        return *this;
     }
 
     Vector2 operator* (const int scalar) {
-        Vector2 tmp;
-        tmp.x = x * scalar;
-        tmp.y = y * scalar;
-        return tmp;
+        x = x * scalar;
+        y = y * scalar;
+        return *this;
     }
     Vector2 operator/ (const int scalar) {
-        Vector2 tmp;
-        tmp.x = x / scalar;
-        tmp.y = y / scalar;
-        return tmp;
+        x = x / scalar;
+        y = y / scalar;
+        return *this;
     }
 
     bool IsZero() {
