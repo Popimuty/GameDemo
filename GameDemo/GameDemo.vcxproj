@@ -141,7 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EndScene.cpp" />
-    <ClCompile Include="enermy.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemy_manager.cpp" />
     <ClCompile Include="GameApp.cpp" />
     <ClCompile Include="GameDemo.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -150,7 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EndScene.h" />
-    <ClInclude Include="enermy.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemy_manager.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="player.h" />

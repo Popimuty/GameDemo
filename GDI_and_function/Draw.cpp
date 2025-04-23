@@ -38,15 +38,11 @@ void Draw::Drow_Init(HWND hWnd, int width, int height)
 //bitmap	그릴 이미지의 포인터(Gdiplus::Bitmap*)
 //srcX, srcY	비트맵 내부에서 시작할 위치(자르기 시작 좌표)
 //srcWidth, srcHeight	비트맵에서 잘라낼 너비와 높이
-
-
-
-
-
 void Draw::Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int locate_x, int locate_y, int srcX, int srcY)
 {
+	
 	if (bitmap == nullptr) {
-		MessageBox(NULL, L"Bitmap이 nullptr입니다.", L"오류", MB_OK);
+		//MessageBox(NULL, L"Bitmap이 nullptr입니다.", L"오류", MB_OK);
 		return;
 	}
 	PatBlt(m_BackBufferDC, 0, 0, win_width, win_height, BLACKNESS);

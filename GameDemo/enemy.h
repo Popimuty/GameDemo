@@ -2,19 +2,21 @@
 #include "pch.h"
 #include "Life_Object.h"
 
-class player : public Life_Object
+class enemy : public Life_Object
 {
+	friend class enemy_manager;
 private:
+	int enemy_num = 0;
 	Vector2 pos;		// 이미지 하단 중심부!
 	Vector2 im_wid_hei; // 해당 이미지 폭,높이
 	Vector2 bit_pos;    // 비트맵 기준 x,y좌표
 	Vector2 min, max;   // AABB()에 사용할 좌표
-	float speed;
 	Gdiplus::Bitmap* storage_stay;
+	
 public:
 	virtual void Initalize()override;
 	virtual void Update()override;
 	virtual void Render()override;
-	void move();
+	
 };
 

@@ -36,7 +36,10 @@
     <ClCompile Include="player.cpp">
       <Filter>Life_object</Filter>
     </ClCompile>
-    <ClCompile Include="enermy.cpp">
+    <ClCompile Include="enemy.cpp">
+      <Filter>Life_object</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy_manager.cpp">
       <Filter>Life_object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +59,10 @@
     <ClInclude Include="player.h">
       <Filter>Life_object</Filter>
     </ClInclude>
-    <ClInclude Include="enermy.h">
+    <ClInclude Include="enemy.h">
+      <Filter>Life_object</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy_manager.h">
       <Filter>Life_object</Filter>
     </ClInclude>
   </ItemGroup>

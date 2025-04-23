@@ -4,12 +4,11 @@
 #include <cmath>
 
 class  Vector2 {
-private:
+public:
     float x, y;
 public:
     virtual ~Vector2() {};
     Vector2 get_vect(const float x_tmp, const float y_tmp) {
-        Vector2 tmp;
         x = x_tmp;
         y = y_tmp;
         return *this;

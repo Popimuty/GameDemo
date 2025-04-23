@@ -16,6 +16,7 @@ void MenuScene::Scene_init() {
 void MenuScene::Update() {
 	if (KeyState::KEY_UP == Input::Get().check(32)) {
 		SceneMove::Get().ChangeScene(1);
+		
 	}
 }
 

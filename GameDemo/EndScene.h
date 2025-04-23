@@ -4,6 +4,5 @@
 class EndScene : public Scene
 {
 
-	
 };
 
