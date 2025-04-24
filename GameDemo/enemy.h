@@ -7,7 +7,7 @@ class enemy : public Life_Object
 	friend class enemy_manager;
 private:
 	int enemy_num = 0;
-	Vector2 pos;		// 이미지 하단 중심부!
+	Vector2 pos;		// 이미지 중심부!
 	Vector2 im_wid_hei; // 해당 이미지 폭,높이
 	Vector2 bit_pos;    // 비트맵 기준 x,y좌표
 	

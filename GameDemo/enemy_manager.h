@@ -12,8 +12,9 @@ private:
 private:
 	enemy* p_enemy = nullptr;
 public:
-	std::vector<enemy*> p_enemy_list;
+	std::vector<enemy*> p_enemy_list ;
 	void Destroy_enemy(int enemy_num);
+	void all_Destroy_enemy();
 	void Create_enemy(int);
 	void enemy_Render();
 	void Update();

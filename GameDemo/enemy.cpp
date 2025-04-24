@@ -3,7 +3,6 @@
 #include "Draw.h"
 
 void enemy::Initalize() {
-	//srand((unsigned int)time(NULL));
 	storage_stay = new Gdiplus::Bitmap(L"../image/bug.png");
 	im_wid_hei.x = storage_stay->GetWidth();
 	im_wid_hei.y = storage_stay->GetHeight();
@@ -24,9 +23,9 @@ void enemy::Render() {
 
 void enemy::pos_cal() {
 	bit_pos.x = pos.x - im_wid_hei.x / 2;
-	bit_pos.y = pos.y - im_wid_hei.y;
+	bit_pos.y = pos.y - im_wid_hei.y /2;
 	min.x = pos.x - im_wid_hei.x / 2;
 	max.x = pos.x + im_wid_hei.x / 2;
-	min.y = pos.y - im_wid_hei.y;
-	max.y = pos.y;
+	min.y = pos.y - im_wid_hei.y/2;
+	max.y = pos.y + im_wid_hei.y/2;
 }

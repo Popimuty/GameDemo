@@ -6,7 +6,10 @@
 #include "Timer.h"
 #include "enemy_manager.h"
 
+
+int player::count = 0;
 void player::Initalize() {
+	player::count = 0;
 	srand((unsigned int)time(NULL));
 	pos.x = 500;
 	pos.y = 400;
@@ -55,16 +58,16 @@ void player::move() {
 		tmp.get_vect(-1, 0);
 		pos += tmp * (float)Timer::Get().deltaTime() * (float)speed;
 	}
-	if (KeyState::KEY_DOWN == Input::Get().check(38)
-		|| KeyState::KEY_HOLD == Input::Get().check(38)) {
-		now_player = UP;
-		tmp.get_vect(0, -1);
-		pos += tmp * (float)Timer::Get().deltaTime() * speed;
-	}
 	if (KeyState::KEY_DOWN == Input::Get().check(39)
 		|| KeyState::KEY_HOLD == Input::Get().check(39)) {
 		now_player = RIGHT;
 		tmp.get_vect(1, 0);
+		pos += tmp * (float)Timer::Get().deltaTime() * speed;
+	}
+	if (KeyState::KEY_DOWN == Input::Get().check(38)
+		|| KeyState::KEY_HOLD == Input::Get().check(38)) {
+		now_player = UP;
+		tmp.get_vect(0, -1);
 		pos += tmp * (float)Timer::Get().deltaTime() * speed;
 	}
 	if (KeyState::KEY_DOWN == Input::Get().check(40)
@@ -76,8 +79,8 @@ void player::move() {
 }
 
 void player::pos_cal() {
-	if (now_player == UP || now_player == DOWN) { // 회전시 비트맵이 그려지는 위치에 따라 중점이 변함 
-		bit_pos.x = pos.x - im_wid_hei.x / 2;     // 그래서 회전할때 비트맵이 그려지는 위치를 변경
+	if (now_player == UP || now_player == DOWN) { // 회전시 중점에 따라서 비트맵이 그려지는 위치를 변경
+		bit_pos.x = pos.x - im_wid_hei.x / 2;    
 		bit_pos.y = pos.y - im_wid_hei.y / 2;
 	}
 	else
@@ -85,18 +88,18 @@ void player::pos_cal() {
 		bit_pos.x = pos.x - im_wid_hei.y / 2;
 		bit_pos.y = pos.y - im_wid_hei.x / 2;
 	}
-	if (now_player == UP || now_player == DOWN) { // 회전시 비트맵이 그려지는 위치에 따라 중점이 변함 
+	if (now_player == UP || now_player == DOWN) { 
 		min.x = pos.x - im_wid_hei.x / 2;
 		max.x = pos.x + im_wid_hei.x / 2;
-		min.y = pos.y + im_wid_hei.y / 2;
-		max.y = pos.y - im_wid_hei.y / 2;
+		min.y = pos.y - im_wid_hei.y / 2;
+		max.y = pos.y + im_wid_hei.y / 2;
 	}
 	else
 	{
 		min.x = pos.x - im_wid_hei.y / 2;
 		max.x = pos.x + im_wid_hei.y / 2;
-		min.y = pos.y + im_wid_hei.x / 2;
-		max.y = pos.y - im_wid_hei.x / 2;
+		min.y = pos.y - im_wid_hei.x / 2;
+		max.y = pos.y + im_wid_hei.x / 2;
 	}
 }
 
@@ -117,5 +120,6 @@ void player::check_coll(){
 }
 
 int player::return_count() {
-	return count;
+	int tmp = count;
+	return tmp;
 }

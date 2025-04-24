@@ -27,6 +27,14 @@ void enemy_manager::Destroy_enemy(int enemy_num)
 	free(tmp);
 }
 
+void enemy_manager::all_Destroy_enemy()
+{
+	for (int i = 0; i < p_enemy_list.size(); i++) {
+		Destroy_enemy(i);
+	}
+}
+
+
 void enemy_manager::Update() {
 
 }

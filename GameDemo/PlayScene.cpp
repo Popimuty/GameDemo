@@ -8,7 +8,7 @@
 
 
 void PlayScene::Scene_init() {
-
+	playTime = 0;
 	enemy_manager::Get().Create_enemy(8);
 	player_tmp.Initalize();
 }
@@ -19,6 +19,7 @@ void PlayScene::Update() {
 	enemy_manager::Get().Update();
 	player_tmp.Update();
 	if (playTime >= 10.0) {
+		enemy_manager::Get().all_Destroy_enemy();
 		SceneMove::Get().ChangeScene(2);
 	}
 	

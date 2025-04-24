@@ -63,8 +63,7 @@ void Draw::Draw_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int 
 void Draw::Write_text(std::wstring tmp, int word_size, int loc_x, int loc_y) {
 	Gdiplus::FontFamily fontFamily(L"Arial");
 	Gdiplus::Font font(&fontFamily, static_cast<Gdiplus::REAL>(word_size), Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
-	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 0, 0, 0));
-
+	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 255, 255, 255));
 	Gdiplus::PointF point(static_cast<Gdiplus::REAL>(loc_x), static_cast<Gdiplus::REAL>(loc_y));
 	graphics->DrawString(tmp.c_str(), -1, &font, point, &brush);
 }
