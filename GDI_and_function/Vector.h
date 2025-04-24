@@ -11,7 +11,9 @@ public:
     Vector2 get_vect(const float x_tmp, const float y_tmp) {
         x = x_tmp;
         y = y_tmp;
+        
         return *this;
+        
     }
 
     Vector2 normalize() {
@@ -21,7 +23,6 @@ public:
     }
 
     Vector2 squr() {
-        Vector2 tmp;
         x = sqrt(x);
         y = sqrt(y);
         return *this;
@@ -67,12 +68,12 @@ public:
         return *this;
     }
 
-    Vector2 operator* (const int scalar) {
+    Vector2 operator* (const float scalar) {
         x = x * scalar;
         y = y * scalar;
         return *this;
     }
-    Vector2 operator/ (const int scalar) {
+    Vector2 operator/ (const float scalar) {
         x = x / scalar;
         y = y / scalar;
         return *this;

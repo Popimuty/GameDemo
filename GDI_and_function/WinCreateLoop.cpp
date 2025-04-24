@@ -138,7 +138,9 @@ void WinCreateLoop::Update() {
 }
 
 void WinCreateLoop::Render() {
+	Draw::Get().Draw_start();
 	SceneMove::Get().Render();
+	Draw::Get().Draw_End();
 }
 
 void WinCreateLoop::Shutdown() {

@@ -6,7 +6,6 @@ class Scene;
 class SceneMove : public SingleTon<SceneMove>
 {
 	friend class SingleTon<SceneMove>;
-	//friend class Singleton<SceneManager>; // 이 클래스만 생성자 접근 허용
 private:
 	SceneMove() = default;			// 다른 생성을 통한 생성자 호출은 금지
 	~SceneMove() = default;

@@ -22,7 +22,9 @@ public:
 	void Drow_Init(HWND hWnd, int width, int height);
 	// TODO: 라이브러리 함수의 예제입니다.
 	
-	void Drow_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int locate_x, int locate_y, int srcX, int srcY);
-	void Drow_End();
-
+	void Draw_Image(Gdiplus::Bitmap* bitmap, int im_width, int im_height, int locate_x, int locate_y, int srcX, int srcY);
+	void Draw_End();
+	void Draw_start();
+	void Draw_off();
+	void Write_text(std::wstring, int , int , int );
 };

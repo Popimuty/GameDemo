@@ -2,32 +2,32 @@
 #include "PlayScene.h"
 #include "Draw.h"
 #include "enemy.h"
+#include "player.h"
+#include "Timer.h"
+#include "SceneMove.h"
 
 
 void PlayScene::Scene_init() {
 
-	storage_player = new Gdiplus::Bitmap(L"../image/player.png");
-	width_player = storage_player->GetWidth();
-	height_player = storage_player->GetHeight();
-
-	//wchar_t buffer[256];
-	//swprintf_s(buffer, L"[Scene_init]\nthis: %p\nstorage_stay: %d", this, width_stay); // 디버그용
-	//MessageBox(NULL, buffer, L"Debug - Scene_init", MB_OK);
+	enemy_manager::Get().Create_enemy(8);
+	player_tmp.Initalize();
 }
 
 
 void PlayScene::Update() {
-
+	playTime += Timer::Get().deltaTime();
+	enemy_manager::Get().Update();
+	player_tmp.Update();
+	if (playTime >= 10.0) {
+		SceneMove::Get().ChangeScene(2);
+	}
+	
 }
 
 
 void PlayScene::Render() {
-	//wchar_t buffer[256];
-	//swprintf_s(buffer, L"[Render]\nthis: %p\nstorage_stay: %p", this, storage_stay);  //디버그용
-	//MessageBox(NULL, buffer, L"Debug - Render", MB_OK);
-
-	//Draw::Get().Drow_Image(storage_, width_stay, height_stay, 0, 0, 0, 0);
-
-	enemy_tmp.Render(); 
 	
+	//Draw::Get().Drow_Image(storage_, width_stay, height_stay, 0, 0, 0, 0);
+	enemy_manager::Get().enemy_Render();
+	player_tmp.Render();
 }

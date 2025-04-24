@@ -21,5 +21,5 @@ void MenuScene::Update() {
 }
 
 void MenuScene::Render() {
-	Draw::Get().Drow_Image(storage_stay, width_stay, height_stay, 0, 0, 0, 0);
+	Draw::Get().Draw_Image(storage_stay, width_stay, height_stay, 0, 0, 0, 0);
 }
