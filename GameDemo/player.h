@@ -5,7 +5,7 @@
 class player : public Life_Object
 {
 private:
-	enum player_state {UP = 0, DOWN = 1, RIGHT = 2, LEFT =3};
+	enum player_state { UP = 0, DOWN = 1, RIGHT = 2, LEFT = 3 };
 	player_state now_player;
 	Vector2 pos;		// 이미지 하단 중심부!
 	Vector2 im_wid_hei; // 해당 이미지 폭,높이
@@ -25,7 +25,6 @@ public:
 	void move();
 	void pos_cal();
 	void check_coll();
-	int return_count()
-
+	int return_count();
 };
 
