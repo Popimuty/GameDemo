@@ -18,4 +18,4 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     gameapp.Loop();
     gameapp.Shutdown();
     return (int)1;
-}
+} //1
