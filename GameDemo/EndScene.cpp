@@ -9,7 +9,7 @@ void EndScene::Scene_init() {
 	storage_back = new Gdiplus::Bitmap(L"../image/end.png");
 	width_back = storage_back->GetWidth();
 	height_back = storage_back->GetHeight();
-	tmp.append("Killed Enemy " + std::to_string(player::return_count()));
+	tmp.append("Killed Enemy " + std::to_string(player::count));
 }
 
 void EndScene::Update() {

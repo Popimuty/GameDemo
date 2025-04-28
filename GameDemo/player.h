@@ -18,7 +18,7 @@ private:
 	Gdiplus::Bitmap* storage_player_u;
 	Gdiplus::Bitmap* storage_player_d;
 public:
-	int count = 0;
+	static int count;
 	virtual void Initalize()override;
 	virtual void Update()override;
 	virtual void Render()override;
